@@ -50,4 +50,14 @@ public class Book {
     public void setStatus(BookStatus status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }
