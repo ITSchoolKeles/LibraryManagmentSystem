@@ -1,10 +1,17 @@
 package itschool.uz.service;
 
+import itschool.uz.enums.BookStatus;
 import itschool.uz.model.Book;
 import itschool.uz.storage.Storage;
 
 public class BookServiceImpl implements BookService{
-    private long bookLastId = 0;
+
+    static {
+        Storage.BOOK_STORAGE[0] = new Book(1, "Sariq devni minib","Xudoyberdi To'xtaboyev", BookStatus.AVAILABLE);
+        Storage.BOOK_STORAGE[1] = new Book(2, "Shum bola", "G'ofur G'ulom", BookStatus.AVAILABLE);
+        Storage.BOOK_STORAGE[2] = new Book(3, "Ikki eshik orasi", "O'tkir Hoshimov", BookStatus.AVAILABLE);
+    }
+    private long bookLastId = 3;
     @Override
     public void addBook(Book book) {
 
@@ -50,6 +57,5 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public void getBookById(long id) {
-
     }
 }

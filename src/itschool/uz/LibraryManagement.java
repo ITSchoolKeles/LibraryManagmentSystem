@@ -4,10 +4,7 @@ import itschool.uz.enums.BookStatus;
 import itschool.uz.enums.UserRole;
 import itschool.uz.model.Book;
 import itschool.uz.model.User;
-import itschool.uz.service.AuthService;
-import itschool.uz.service.AuthServiceImpl;
-import itschool.uz.service.BookService;
-import itschool.uz.service.BookServiceImpl;
+import itschool.uz.service.*;
 
 import java.util.Scanner;
 
@@ -16,6 +13,7 @@ public class LibraryManagement {
     private static final Scanner INPUT_FOR_STRING = new Scanner(System.in);
     private static final AuthService authService = new AuthServiceImpl();
     private static final BookService bookService = new BookServiceImpl();
+    private static final TransactionService transactionService = new TransactionServiceImpl();
     private static User currentUser = null;
     public static void main(String[] args) {
         while (true) {
@@ -44,10 +42,65 @@ public class LibraryManagement {
                 }
 
             }
-            // todo Oddiy user ucchun frontend menu yasab berish
+            else if(currentUser != null && currentUser.getRole() == UserRole.USER) {
+                while (true) {
+                    userDashboard();
+                    int userMenuNumber = getMenuNumber();
+                    switch (userMenuNumber) {
+                        case 1 -> viewAllBooks();
+                        case 2 -> borrowBook();
+                        case 3 -> returnBook();
+                        case 4 -> viewBorrowedBooks();
+                        case 5 -> myTransactionHistory();
 
-            // Hozirgacha ypozgan kodimizni review qilish va xatolarni tuzatish
+                    }
+                    if(userMenuNumber == 0){
+                        System.out.println("Logging out...");
+                        currentUser = null;
+                        break;
+                    }
+                }
+            }
+
+
         }
+    }
+
+    private static void myTransactionHistory() {
+        System.out.println("This is the transaction history page");
+        System.out.println("----------------------------------------------");
+
+        transactionService.transactionsByUserId(currentUser.getId());
+    }
+
+    private static void viewBorrowedBooks() {
+        System.out.println("This is the view borrowed books page");
+        System.out.println("----------------------------------------------");
+    }
+
+    private static void returnBook() {
+        System.out.println("This is the return book page");
+        System.out.println("----------------------------------------------");
+
+        transactionService.viewTransactionsByUserIdAndReturnedDate(currentUser.getId());
+        int transactionId = getMenuNumber();
+
+        transactionService.returnBook(transactionId);
+
+
+
+    }
+
+    private static void borrowBook() {
+        System.out.println("This is the borrow book page");
+        System.out.println("----------------------------------------------");
+
+        viewAllBooks();
+
+        int bookId = getMenuNumber();
+
+        transactionService.createTransaction(currentUser.getId(), bookId);
+
     }
 
     private static void deleteBook() {
@@ -80,7 +133,7 @@ public class LibraryManagement {
         bookService.addBook(newBook);
     }
 
-    ///  Admin panelni qilish // kiton qosish
+    ///  Admin panelni qilish // kitob qosish
     public static void displayMenu(){
         System.out.println("Welcome to our Library Management System");
         System.out.println("----------------------------------------------");
@@ -154,11 +207,27 @@ public class LibraryManagement {
         System.out.println("1. Add a book");
         System.out.println("2. View all books");
         System.out.println("3. Delete a book");
+        System.out.println("4. View all transactions");// todo barcha transactionlarni korish
+        System.out.println("5. View certain user transaction"); // todo ayni bir userni transactionlarni ko'rish
         System.out.println("0. Logout");
 
     }
 
+    // todo User dashboarni shakllantirish
 
- // login
+    public static void userDashboard(){
+        System.out.println();
+        System.out.println("Welcome to the User Dashboard");
+        System.out.println("----------------------------------------------");
+
+        System.out.println("1. View all books");  // done
+        System.out.println("2. Borrow a book"); // done // todo faqatgina availablelarni chiqarish
+        System.out.println("3. Return a book"); //done
+        System.out.println("4. View my borrowed books");   // todo
+        System.out.println("5. Transaction history"); // done
+        System.out.println("0. Logout");
+    }
+
+
 
 }

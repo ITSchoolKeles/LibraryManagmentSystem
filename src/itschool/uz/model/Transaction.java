@@ -59,4 +59,23 @@ public class Transaction {
     public void setReturnDate(LocalDateTime returnDate) {
         this.returnDate = returnDate;
     }
+    @Override
+    public String toString() {
+        if(returnDate == null){
+            return "Transaction{" +
+                    "id=" + id +
+                    ", user=" + user.getEmail() +
+                    ", book=" + book.getTitle() +
+                    ", borrowDate=" + borrowDate.getYear() + "-" + borrowDate.getMonthValue() + "-" + borrowDate.getDayOfMonth() + " " + borrowDate.getHour() + ":" + borrowDate.getMinute() + ":" + borrowDate.getSecond() +
+                    ", returnDate=null" +
+                    '}';
+        }
+        return "Transaction{" +
+                "id=" + id +
+                ", user=" + user.getEmail() +
+                ", book=" + book.getTitle() +
+                ", borrowDate=" + borrowDate.getYear() + "-" + borrowDate.getMonthValue() + "-" + borrowDate.getDayOfMonth() + " " + borrowDate.getHour() + ":" + borrowDate.getMinute() + ":" + borrowDate.getSecond() +
+                ", returnDate=" + returnDate.getYear() + "-" + returnDate.getMonthValue() + "-" + returnDate.getDayOfMonth() + " " + returnDate.getHour() + ":" + returnDate.getMinute() + ":" + returnDate.getSecond() +
+                '}';
+    }
 }

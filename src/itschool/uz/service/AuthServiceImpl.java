@@ -13,6 +13,14 @@ public class AuthServiceImpl implements AuthService {
                 "admin123",
                 UserRole.ADMIN);
           Storage.USER_STORAGE[0] = admin;
+          User user = new User(
+                  1,
+                  "Elyor Azimov",
+                  "elyor@gmail.com",
+                  "ea1202",
+                    UserRole.USER
+          );
+          Storage.USER_STORAGE[1] = user;
         System.out.println("Admin has  been successfully added to the system");
     }
      private long userLastId = 1;
@@ -20,8 +28,7 @@ public class AuthServiceImpl implements AuthService {
     public User login(String email, String password) {
         User user = null;
         for(User u : Storage.USER_STORAGE){
-            if(u  == null) continue;
-            else{
+            if(u != null){
                 if(u.getEmail().equals(email)){
                     user = u; break;
                 }
@@ -46,11 +53,21 @@ public class AuthServiceImpl implements AuthService {
             System.out.println("To'dirilmagan bo'sh maydonlarni to'diring");
             return  null;
         }
-        // todo emailni unikal ekanligini tekshirish
-        //  agar boshqa userda shu email mavjud bo'lsa ro'yhatdan o'tkazmaslik
+
+        for(User u : Storage.USER_STORAGE){
+            if(u != null && u.getEmail().equals(user.getEmail())){
+                System.out.println("This email is already registered");
+                return null;
+            }
+        }
         user.setId(++userLastId);
-        // todo index ga bogliq bolgmagan holsa saqlash
-        Storage.USER_STORAGE[(int) (user.getId() - 1)] = user;
+
+     for(int i = 0; i < Storage.USER_STORAGE.length; i++){
+         if(Storage.USER_STORAGE[i] == null){
+             Storage.USER_STORAGE[i] = user;
+             break;
+         }
+     }
         return user;
     }
 }
