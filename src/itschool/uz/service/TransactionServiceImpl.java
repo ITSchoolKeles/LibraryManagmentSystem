@@ -131,7 +131,7 @@ public class TransactionServiceImpl implements TransactionService{
         }
 
         if (!found) {
-            System.out.println("No transactions found!");
+            System.out.println("You do not have borrowed book now!");
         }
     }
 

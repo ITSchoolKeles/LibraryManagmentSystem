@@ -14,6 +14,7 @@ public class LibraryManagement {
     private static final AuthService authService = new AuthServiceImpl();
     private static final BookService bookService = new BookServiceImpl();
     private static final TransactionService transactionService = new TransactionServiceImpl();
+    private static  final UserService userService = new UserServiceImpl();
     private static User currentUser = null;
     public static void main(String[] args) {
         while (true) {
@@ -35,6 +36,7 @@ public class LibraryManagement {
                         case 3 -> deleteBook();
                         case 4 -> viewAllTransactions();
                         case 5 -> viewCertainUserTransaction();
+                        case 6 -> viewAllUsers();
                     }
                     if(getAdminMenuNumber == 0){
                         System.out.println("Logging out...");
@@ -68,9 +70,21 @@ public class LibraryManagement {
         }
     }
 
+    private static void viewAllUsers() {
+        System.out.println("THis is the view all users page");
+        System.out.println("----------------------------------------------");
+
+
+        userService.viewAllUsers();
+
+    }
+
     private static void viewCertainUserTransaction() {
         System.out.println("This is the view Certain User Transaction page");
         System.out.println("----------------------------------------------");
+
+        userService.viewAllUsers();
+
         int userId = getMenuNumber();
 
         transactionService.transactionsByUserId(userId);
@@ -117,9 +131,8 @@ public class LibraryManagement {
     }
 
     private static void deleteBook() {
-        bookService.getAllBooks();
+        bookService.getAvailableBooks();
         int bookId = getMenuNumber();
-
         bookService.deleteBook(bookId);
 
     }
@@ -219,8 +232,9 @@ public class LibraryManagement {
         System.out.println("1. Add a book");
         System.out.println("2. View all books");
         System.out.println("3. Delete a book");
-        System.out.println("4. View all transactions"); // Done
-        System.out.println("5. View certain user transaction");// Done
+        System.out.println("4. View all transactions");
+        System.out.println("5. View certain user transaction");
+        System.out.println("6. View all users");
         System.out.println("0. Logout");
 
     }

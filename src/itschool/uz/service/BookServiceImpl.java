@@ -27,8 +27,9 @@ public class BookServiceImpl implements BookService{
                 Storage.BOOK_STORAGE[i] = book;
                 break;
             }
-            System.out.println("Book has been successfully added to the system");
+
         }
+        System.out.println("Book has been successfully added to the system");
     }
 
     @Override
