@@ -7,5 +7,6 @@ public interface BookService {
     void deleteBook(long id);
     void getAllBooks();
     void getBookById(long id);
+    void getAvailableBooks();
 
 }

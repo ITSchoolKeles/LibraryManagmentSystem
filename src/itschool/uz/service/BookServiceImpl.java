@@ -58,4 +58,18 @@ public class BookServiceImpl implements BookService{
     @Override
     public void getBookById(long id) {
     }
+    @Override
+    public void getAvailableBooks() {
+        boolean found = false;
+        for (Book book : Storage.BOOK_STORAGE) {
+            if (book != null && book.getStatus() == BookStatus.AVAILABLE) {
+                System.out.println(book);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Hozircha hamma kitoblar band.");
+        }
+    }
 }

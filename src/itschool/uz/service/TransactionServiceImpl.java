@@ -102,6 +102,40 @@ public class TransactionServiceImpl implements TransactionService{
             }
         }
     }
+    @Override
+    public void viewAllTransactions() {
 
+        boolean isEmpty = true;
+
+        for(Transaction transaction : Storage.TRANSACTION_STORAGE){
+            if(transaction != null){
+                System.out.println(transaction);
+                isEmpty = false;
+            }
+        }
+
+        if(isEmpty){
+            System.out.println("No transactions found!");
+        }
+    }
+    @Override
+    public void viewCurrentBorrowedBooks(long userId) {
+        boolean found = false;
+        for (Transaction transaction : Storage.TRANSACTION_STORAGE) {
+            if (transaction != null) {
+                if (transaction.getUser().getId() == userId && transaction.getReturnDate() == null) {
+                    System.out.println(transaction);
+                    found = true;
+                }
+            }
+        }
+
+        if (!found) {
+            System.out.println("No transactions found!");
+        }
+    }
 
 }
+
+
+

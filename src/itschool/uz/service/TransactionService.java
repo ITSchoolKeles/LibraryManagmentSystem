@@ -5,4 +5,6 @@ public interface TransactionService {
     void transactionsByUserId(long userId);
     void returnBook(long transactionId);
     void viewTransactionsByUserIdAndReturnedDate(long userId);
+    void viewAllTransactions();
+    void viewCurrentBorrowedBooks(long userId);
 }

@@ -33,6 +33,8 @@ public class LibraryManagement {
                         case 1 -> addBook();
                         case 2 -> viewAllBooks();
                         case 3 -> deleteBook();
+                        case 4 -> viewAllTransactions();
+                        case 5 -> viewCertainUserTransaction();
                     }
                     if(getAdminMenuNumber == 0){
                         System.out.println("Logging out...");
@@ -66,6 +68,17 @@ public class LibraryManagement {
         }
     }
 
+    private static void viewCertainUserTransaction() {
+        System.out.println("This is the view Certain User Transaction page");
+        System.out.println("----------------------------------------------");
+        int userId = getMenuNumber();
+
+        transactionService.transactionsByUserId(userId);
+    }
+    private static void viewAllTransactions() {
+        transactionService.viewAllTransactions();
+    }
+
     private static void myTransactionHistory() {
         System.out.println("This is the transaction history page");
         System.out.println("----------------------------------------------");
@@ -76,6 +89,8 @@ public class LibraryManagement {
     private static void viewBorrowedBooks() {
         System.out.println("This is the view borrowed books page");
         System.out.println("----------------------------------------------");
+
+        transactionService.viewCurrentBorrowedBooks(currentUser.getId());
     }
 
     private static void returnBook() {
@@ -87,15 +102,13 @@ public class LibraryManagement {
 
         transactionService.returnBook(transactionId);
 
-
-
     }
 
     private static void borrowBook() {
         System.out.println("This is the borrow book page");
         System.out.println("----------------------------------------------");
 
-        viewAllBooks();
+        bookService.getAvailableBooks();
 
         int bookId = getMenuNumber();
 
@@ -112,7 +125,7 @@ public class LibraryManagement {
     }
 
     private static void viewAllBooks() {
-         bookService.getAllBooks();
+        bookService.getAllBooks();
     }
 
     private static void addBook() {
@@ -133,7 +146,6 @@ public class LibraryManagement {
         bookService.addBook(newBook);
     }
 
-    ///  Admin panelni qilish // kitob qosish
     public static void displayMenu(){
         System.out.println("Welcome to our Library Management System");
         System.out.println("----------------------------------------------");
@@ -207,13 +219,11 @@ public class LibraryManagement {
         System.out.println("1. Add a book");
         System.out.println("2. View all books");
         System.out.println("3. Delete a book");
-        System.out.println("4. View all transactions");// todo barcha transactionlarni korish
-        System.out.println("5. View certain user transaction"); // todo ayni bir userni transactionlarni ko'rish
+        System.out.println("4. View all transactions"); // Done
+        System.out.println("5. View certain user transaction");// Done
         System.out.println("0. Logout");
 
     }
-
-    // todo User dashboarni shakllantirish
 
     public static void userDashboard(){
         System.out.println();
@@ -221,13 +231,10 @@ public class LibraryManagement {
         System.out.println("----------------------------------------------");
 
         System.out.println("1. View all books");  // done
-        System.out.println("2. Borrow a book"); // done // todo faqatgina availablelarni chiqarish
+        System.out.println("2. Borrow a book"); // done
         System.out.println("3. Return a book"); //done
-        System.out.println("4. View my borrowed books");   // todo
+        System.out.println("4. View my borrowed books"); // done
         System.out.println("5. Transaction history"); // done
         System.out.println("0. Logout");
     }
-
-
-
 }
